@@ -13,10 +13,6 @@ from getpass import getpass
 import os
 import urllib.request
 
-# BeautifulSoupWebReader = download_loader("BeautifulSoupWebReader", custom_path='.')
-
-# os.environ["OPENAI_API_KEY"] = "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"
-# openai_api_key = os.getenv("OPENAI_API_KEY")
 app = Flask("content_based_summarizer")
 
 # Set the secret key
