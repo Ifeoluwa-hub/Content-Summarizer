@@ -15,7 +15,7 @@ import urllib.request
 
 # BeautifulSoupWebReader = download_loader("BeautifulSoupWebReader", custom_path='.')
 
-os.environ["OPENAI_API_KEY"] = "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"
+# os.environ["OPENAI_API_KEY"] = "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"
 # openai_api_key = os.getenv("OPENAI_API_KEY")
 app = Flask("content_based_summarizer")
 
@@ -66,6 +66,8 @@ def process():
                     contents = f.readlines()
                     text = ' '.join([str(elem) for elem in contents])
             
+           
+            openai.api_key = os.environ.get("OPENAI_API_KEY")
             enc = tiktoken.encoding_for_model("gpt-3.5-turbo")
             model_context_size = 15500
             text_max_length = model_context_size - len(enc.encode(text))
@@ -104,11 +106,12 @@ def process():
                 text = ''
                 for paragraph in soup.find_all('p'):
                     text += paragraph.text 
+                    text = re.sub('\n\n', ' ',  re.sub('\t', ' ' ,text))
             else:
                 # If the request was not successful, print an error message
                 print('Failed to retrieve the website content. Status code:', response.status_code)
                 text = None
-            text = re.sub('\n', ' ',  re.sub('\xa0', ' ' ,text))  
+            text = re.sub('\n\n', ' ',  re.sub('\xa0', ' ' ,text))  
 
             enc = tiktoken.encoding_for_model("gpt-3.5-turbo")
             model_context_size = 15500
